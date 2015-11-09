@@ -2312,6 +2312,7 @@ if (typeof HTMLTemplateElement === "undefined") {
     HTMLTemplateElement.decorate = function(template) {
       if (!template.content) {
         template.content = contentDoc.createDocumentFragment();
+        console.log(template.content);
       }
       var child;
       while (child = template.firstChild) {
@@ -2497,6 +2498,7 @@ if (typeof HTMLTemplateElement === "undefined") {
     var userPolymer = window.Polymer;
 
     window.Polymer = function(prototype) {
+      HTMLTemplateElement.bootstrap(document);
       // if input is a `class` (aka a function with a prototype), use the prototype
       // remember that the `constructor` will never be called
       if (typeof prototype === 'function') {
@@ -2857,7 +2859,6 @@ if (typeof HTMLTemplateElement === "undefined") {
      */
     import: function(id, selector) {
       if (id) {
-        forceDocumentUpgrade();
         var m = findModule(id);
         if (!m) {
           // If polyfilling, a script can run before a dom-module element
