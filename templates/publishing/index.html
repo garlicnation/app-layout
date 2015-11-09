@@ -1587,9 +1587,9 @@ window.HTMLImports.addModule(function(scope) {
     doc.head.appendChild(meta);
     doc.head.appendChild(base);
     doc.body.innerHTML = resource;
-    // if (window.HTMLTemplateElement && HTMLTemplateElement.bootstrap) {
-    //   HTMLTemplateElement.bootstrap(doc);
-    // }
+    if (window.HTMLTemplateElement && HTMLTemplateElement.bootstrap) {
+      HTMLTemplateElement.bootstrap(doc);
+    }
     return doc;
   }
   if (!document.baseURI) {
@@ -2318,8 +2318,8 @@ if (typeof HTMLTemplateElement === "undefined") {
       while (child = template.firstChild) {
         template.content.appendChild(child);
       }
-      if (canDecorate) {
-        try {
+      // if (canDecorate) {
+      //   try {
           Object.defineProperty(template, "innerHTML", {
             get: function() {
               var o = "";
@@ -2340,9 +2340,9 @@ if (typeof HTMLTemplateElement === "undefined") {
             },
             configurable: true
           });
-        } catch (err) {
-          canDecorate = false;
-        }
+        // } catch (err) {
+        //   canDecorate = false;
+        // }
       }
     };
     HTMLTemplateElement.bootstrap = function(doc) {
