@@ -3557,6 +3557,7 @@ if (typeof HTMLTemplateElement === "undefined") {
             value = JSON.parse(value);
           } catch(x) {
             value = null;
+            console.log(x.stack);
             console.warn('Polymer::Attributes: couldn`t decode Array as JSON');
           }
           break;
