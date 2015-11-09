@@ -3557,8 +3557,6 @@ if (typeof HTMLTemplateElement === "undefined") {
             value = JSON.parse(value);
           } catch(x) {
             value = null;
-            console.warn("Testing that updates are being caught");
-            console.warn(x.stack);
             console.warn('Polymer::Attributes: couldn`t decode Array as JSON');
           }
           break;
@@ -12544,7 +12542,7 @@ Note, all features of `custom-style` are available when defining styles as part 
     },
 
     attached: function() {
-      this._prepTemplate();
+      // this._prepTemplate();
       var parentNode = Polymer.dom(this).parentNode;
       for (var i=0; i<this._instances.length; i++) {
         Polymer.dom(parentNode).insertBefore(this._instances[i].root, this);
