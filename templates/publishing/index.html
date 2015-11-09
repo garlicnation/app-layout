@@ -1930,11 +1930,18 @@ window.CustomElements.addModule(function(scope) {
       return root;
     };
   }
+  function upgradeAll(doc) {
+    if (HTMLTemplateElement && HTMLTemplateElement.bootstrap) {
+      console.log("Boostrapping from upgradeAll.");
+      HTMLTemplateElement.bootstrap(doc);
+    }
+    addedNode(doc);
+  }
   scope.watchShadow = watchShadow;
   scope.upgradeDocumentTree = upgradeDocumentTree;
   scope.upgradeDocument = upgradeDocument;
   scope.upgradeSubtree = addedSubtree;
-  scope.upgradeAll = addedNode;
+  scope.upgradeAll = upgradeAll;
   scope.attached = attached;
   scope.takeRecords = takeRecords;
 });
@@ -1956,6 +1963,12 @@ window.CustomElements.addModule(function(scope) {
     flags.upgrade && console.group("upgrade:", element.localName);
     if (definition.is) {
       element.setAttribute("is", definition.is);
+    }
+
+    if (definition.extends && definition.extends == 'template') {
+      console.log("Extending template.");
+      HTMLTemplateElement.decorate(this);
+      HTMLTemplateElement.bootstrap(this.content);
     }
     implementPrototype(element, definition);
     element.__upgraded__ = true;
@@ -2897,9 +2910,6 @@ if (typeof HTMLTemplateElement === "undefined") {
     if (cePolyfill) {
       var script = document._currentScript || document.currentScript;
       var doc = script && script.ownerDocument || document;
-      if (window.HTMLTemplateElement && HTMLTemplateElement.bootstrap) {
-        HTMLTemplateElement.bootstrap(doc);
-      }
       if (doc) {
         CustomElements.upgradeAll(doc);
       }
@@ -12542,7 +12552,6 @@ Note, all features of `custom-style` are available when defining styles as part 
     },
 
     attached: function() {
-      // this._prepTemplate();
       var parentNode = Polymer.dom(this).parentNode;
       for (var i=0; i<this._instances.length; i++) {
         Polymer.dom(parentNode).insertBefore(this._instances[i].root, this);
