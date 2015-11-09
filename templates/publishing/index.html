@@ -2897,9 +2897,9 @@ if (typeof HTMLTemplateElement === "undefined") {
     if (cePolyfill) {
       var script = document._currentScript || document.currentScript;
       var doc = script && script.ownerDocument || document;
-      // if (window.HTMLTemplateElement && HTMLTemplateElement.bootstrap) {
-      //   HTMLTemplateElement.bootstrap(doc);
-      // }
+      if (window.HTMLTemplateElement && HTMLTemplateElement.bootstrap) {
+        HTMLTemplateElement.bootstrap(doc);
+      }
       if (doc) {
         CustomElements.upgradeAll(doc);
       }
@@ -12542,7 +12542,7 @@ Note, all features of `custom-style` are available when defining styles as part 
     },
 
     attached: function() {
-      this._prepTemplate();
+      // this._prepTemplate();
       var parentNode = Polymer.dom(this).parentNode;
       for (var i=0; i<this._instances.length; i++) {
         Polymer.dom(parentNode).insertBefore(this._instances[i].root, this);
